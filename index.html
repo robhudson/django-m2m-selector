@@ -1,0 +1,50 @@
+<html>
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_user_permissions").closest("tr").hide();
+			$("#id_user_permissions").closest("tbody")
+				.append('<tr><th>User Permissions</th><td><ul id="user-permissions-list" class="connectedSortable"></ul><ul id="user-permissions-list-selected" class="connectedSortable"></ul></td></tr>');
+			$("#id_user_permissions option").each(function(i, elem) {
+				if (elem.selected) {
+					$("#user-permissions-list-selected").append('<li id="obj-' + elem.value + '">' + elem.text + '</li>');
+				} else {
+					$("#user-permissions-list").append('<li id="obj-' + elem.value + '">' + elem.text + '</li>');
+				}
+			});
+			$("#user-permissions-list, #user-permissions-list-selected").sortable({
+				connectWith: '.connectedSortable',
+				stop: function(event, ui) {
+					if (ui.item.parent().attr('id') == 'user-permissions-list-selected') {
+						$('#id_user_permissions option').each(function(i, elem) {
+							if ("obj-" + elem.value == ui.item.attr('id')) {
+								elem.selected = true;
+							}
+						});
+					} else {
+						$('#id_user_permissions option').each(function(i, elem) {
+							if ("obj-" + elem.value == ui.item.attr('id')) {
+								elem.selected = false;
+							}
+						});
+					}
+				},
+			}).disableSelection();
+		});
+	</script>
+	<style type="text/css">
+		#user-permissions-list, #user-permissions-list-selected { list-style-type:none; margin:0; padding:0; float:left; margin-right:10px; border:2px solid #C5E5F4; height:200px; width:300px; overflow:auto;}
+		#user-permissions-list li, #user-permissions-list-selected li { cursor:move;}
+	</style>
+</head>
+<body>
+	<form>
+		<table width="900" align="center">
+		{{ form }}
+		</table>
+	</form>
+</body>
+</html>
+
