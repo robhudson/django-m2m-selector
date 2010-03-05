@@ -74,7 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'm2m_pe_selector.urls'
+ROOT_URLCONF = 'django-m2m-selector.urls'
 
 TEMPLATE_DIRS = (PROJECT_PATH,)
 
